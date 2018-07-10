@@ -1,36 +1,45 @@
 var https = require('https')
+var http = require('http')
 var cheerio = require('cheerio')
+var mysql = require('mysql')
 var fs = require('fs')
 var path = require('path')
-const url = 'https://a3c3b3.com//1000/1921/1921.mp4'
-const resoucePath = path.join(__dirname,'./resouce')
-//获取url
-http.get('http://www.992jj.com/',(res)=>{
-    var html = ''
-    res.on('data',(chunk)=>{
-        html += chunk
-    })
-    res.on('end',()=>{
-        var $ = cheerio(html)
-    })
+
+const db = mysql.createPool({
+    host: '122.152.219.175',
+    user: 'root',
+    password: 'root',
+    database: 'blog'
 })
-
-//判读路径是否存在 只有当不存在时 才创建
-fs.exists(resoucePath,(exists)=>{
-    !exists && fs.mkdirSync(path.join(__dirname,'./resouce'))
+const resourcePath = path.join(__dirname, './resource')
+fs.exists(resourcePath, exists => {
+    !exists && fs.mkdirSync(resourcePath)
 })
-
-
-https.get(url,(res)=>{
-    const writeStream = fs.createWriteStream(path.join(__dirname,'./resouce','av.mp4'))
-    res.setEncoding = 'binary'
-    res.on('data',(chunk)=>{
-        writeStream.write(chunk,(err)=>{
-            if(err) console.error(err);
-        })
-    })
-    res.on('end',()=>{
-        console.log('success!');
+db.query(`SELECT * FROM av_table`, (err, data) => {
+    if (err) console.error(err);
+    var _data = data
+    _data.forEach((item,index) => {
+        let av_url = item.av_url
+        let av_name = item.av_name
+        var movie_num = av_url.match(/\/\d{1,5}/g)[0].slice(1)
+        var path_num = movie_num <= 1000 ? 0 : 1000;
+        var movie_url = `https://a3c3b3.com//${path_num}/${movie_num}/${movie_num}.mp4`
         
+        https.get(movie_url, res => {
+            const writeStream = fs.createWriteStream(path.join(__dirname, 'resource', `${index}.mp4`))
+            res.setEncoding('binary')
+            res.on('data', chunk => {
+                writeStream.write(chunk, 'binary')
+            })
+            res.on('end', () => {
+                console.log(`${index}.mp4 下载成功！`);
+
+            })
+        })
+
+
+
+
+
     })
-})
+});

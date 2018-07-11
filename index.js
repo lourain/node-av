@@ -1,6 +1,4 @@
 var https = require('https')
-var http = require('http')
-var cheerio = require('cheerio')
 var mysql = require('mysql')
 var fs = require('fs')
 var path = require('path')
@@ -38,17 +36,6 @@ if (start_num) {
             var path_num = movie_num < 1000 ? 0 : 1000;
             var movie_url = `https://a3c3b3.com//${path_num}/${movie_num}/${movie_num}.mp4`
             download(movie_url, index)
-            // https.get(movie_url, res => {
-            //     const writeStream = fs.createWriteStream(path.join(__dirname, 'resource', `${index}.mp4`))
-            //     res.setEncoding('binary')
-            //     res.on('data', chunk => {
-            //         writeStream.write(chunk, 'binary')
-            //     })
-            //     res.on('end', () => {
-            //         console.log(`${index}.mp4 下载成功！`);
-
-            //     })
-            // })
         })
     });
 

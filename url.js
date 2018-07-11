@@ -16,7 +16,6 @@ http.get(url,res=>{
     })
     res.on('end',()=>{
         var $ = cheerio.load(html)
-        console.log($('#list_videos_videos_watched_right_now_items .item').length)
         $('#list_videos_videos_watched_right_now_items .item').each(function(item){
             var av_name = $('.title',this).text()
             var av_url = $('a',this).attr('href')

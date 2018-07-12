@@ -34,11 +34,12 @@ class Reptile {
     //模式2，下载最新的前几页的所有视频
     async model_2() {
         let _data = await this.get_json()
-        console.log(_data);
+        console.log(_data.length);
         
         _data.forEach(item => {
             let av_url = item.av_url
-            let av_name = item.av_name.replace(/\s*/g,'')
+            // let av_name = item.av_name.replace(/\s*/g,'')
+            let av_name = item.av_name
             var movie_num = av_url.match(/\/\d{1,5}/g)[0].slice(1)
             var path_num = movie_num < 1000 ? 0 : 1000;
             var movie_url = `https://a3c3b3.com//${path_num}/${movie_num}/${movie_num}.mp4`
@@ -68,53 +69,3 @@ class Reptile {
 }
 
 new Reptile().models()
-
-
-//模式1，选择第几部 往后下载多少部
-// async function model_1() {
-//     var i = start_num;
-//     while (i < (start_num + amount)) {
-//         var path_num = start_num < 1000 ? 0 : 1000;
-//         var movie_url = `https://a3c3b3.com//${path_num}/${i}/${i}.mp4`
-//         download(movie_url, i)
-//         i++
-//     }
-// }
-
-// //模式2，下载最新的前几页的所有视频
-// async function model_2() {
-//     let _data = await get_json()
-//     console.log(_data.length)
-//     _data.forEach(item => {
-//         let av_url = item.av_url
-//         let av_name = item.av_name
-//         var movie_num = av_url.match(/\/\d{1,5}/g)[0].slice(1)
-//         var path_num = movie_num < 1000 ? 0 : 1000;
-//         var movie_url = `https://a3c3b3.com//${path_num}/${movie_num}/${movie_num}.mp4`
-//     })
-// }
-
-// async function models() {
-//     fs.exists(resourcePath, exists => {
-//         if (exists) {
-//             start_num && amount ? model_1() : model_2()
-//         }
-//     })
-// }
-
-// models()
-
-
-// function download(movie_url, index, callback) {
-//     https.get(movie_url, res => {
-//         const writeStream = fs.createWriteStream(path.join(__dirname, 'resource', `${index}.mp4`))
-//         res.setEncoding('binary')
-//         res.on('data', chunk => {
-//             writeStream.write(chunk, 'binary')
-//         })
-//         res.on('end', () => {
-//             console.log(`${index}.mp4 下载成功！`);
-//             callback && callback()
-//         })
-//     })
-// }

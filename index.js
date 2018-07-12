@@ -38,7 +38,7 @@ class Reptile {
         
         _data.forEach(item => {
             let av_url = item.av_url
-            let av_name = item.av_name
+            let av_name = item.av_name.replace(/\s*/g,'')
             var movie_num = av_url.match(/\/\d{1,5}/g)[0].slice(1)
             var path_num = movie_num < 1000 ? 0 : 1000;
             var movie_url = `https://a3c3b3.com//${path_num}/${movie_num}/${movie_num}.mp4`

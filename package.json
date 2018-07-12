@@ -18,9 +18,5 @@
   "homepage": "https://github.com/lourain/node-reptile#readme",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.2"
-  },
-  "dependencies": {
-    "mysql": "^2.15.0",
-    "webpage": "^0.3.0"
   }
 }

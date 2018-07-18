@@ -23,7 +23,7 @@ async function insert_json(pageNum) {
     var i = 1;
     let json = [];
     while (i <= pageNum) {
-        const url = `http://www.992jj.com/?mode=async&function=get_block&block_id=list_videos_most_recent_videos&sort_by=post_date&from=${i}`
+        const url = `http://www.992jj.com/index.php?mode=async&function=get_block&block_id=list_videos_most_recent_videos&sort_by=post_date&from=${i}`
         let _html = await get_html(url)
         let $ = cheerio.load(_html)
         $('.margin-fix .item').each(function (item) {

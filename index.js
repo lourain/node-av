@@ -7,7 +7,7 @@ var _json = require('./url')
 class Reptile {
     constructor() {
         this.resourcePath = path.join(__dirname, './resource')
-        this.start_num = parseInt(process.argv[2])//从第几部开始下
+        this.start_num = parseInt(process.argv[2] || 1)//从第几部开始下
         this.amount = parseInt(process.argv[3])//下载多少部电影
     }
 

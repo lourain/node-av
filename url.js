@@ -19,22 +19,19 @@ function get_html(url) {
     })
 }
 
-async function insert_json(pageNum) {
+async function insert_json() {
     let json = [];
-    while (i <= pageNum) {
-        const url = `http://www.992jj.com/index.php`
-        let _html = await get_html(url)
-        let $ = cheerio.load(_html)
-        $('.margin-fix .item').each(function (item) {
-            var o = {}
-            var av_name = $('a', this).attr('title')
-            var av_url = $('a', this).attr('href')
-            o['av_name'] = av_name
-            o['av_url'] = av_url
-            json.push(o)
-        })
-        i++
-    }
+    const url = `http://www.992jj.com/index.php`
+    let _html = await get_html(url)
+    let $ = cheerio.load(_html)
+    $('.margin-fix .item').each(function (item) {
+        var o = {}
+        var av_name = $('a', this).attr('title')
+        var av_url = $('a', this).attr('href')
+        o['av_name'] = av_name
+        o['av_url'] = av_url
+        json.push(o)
+    })
     return json
 }
 
